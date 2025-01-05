@@ -49,10 +49,11 @@
 
 /* Popup Header */
 .podlove-subscribe-popup-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .podlove-subscribe-popup-header h2 {
@@ -66,6 +67,9 @@
     font-size: 24px;
     cursor: pointer;
     line-height: 1;
+    position: absolute;
+    right: 12px;
+    top: 22px;
 }
 
 /* Podcast Info */

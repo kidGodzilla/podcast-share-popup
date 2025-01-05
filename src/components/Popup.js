@@ -31,7 +31,7 @@ export default class Popup {
         <div class="podlove-subscribe-popup-inner">
           <div class="podlove-subscribe-popup-header">
             <button class="close-button">&times;</button>
-            <h2>Subscribe to ${this.podcast.title}</h2>
+            <h2>Subscribe</h2>
           </div>
           <div id="podlove-subscribe-panel-podcast"></div>
           <div id="podlove-subscribe-panel-clients"></div>
