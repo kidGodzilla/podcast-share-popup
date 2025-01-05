@@ -16,8 +16,7 @@ export default class ClientsPanel {
         const ua = window.navigator?.userAgent || "";
         
         // Match original platform detection logic
-        if (/Windows/.test(ua)) return 'windows';
-        // if (/trident/i.test(ua)) return 'windowsphone';
+        if (/Windows NT/.test(ua)) return 'windows';
         if (/android/i.test(ua)) return 'android';
         if (/(ipad|iphone|ipod)/i.test(ua)) return 'ios';
         if (/(linux|openbsd|freebsd|netbsd)/i.test(ua)) return 'unix';
@@ -33,7 +32,8 @@ export default class ClientsPanel {
         const baseClients = [{
             title: 'Other (RSS Feed URL)',
             url: feedUrl,
-            icon: 'generic/rss.png'
+            icon: 'generic/rss.png',
+            alwaysAtEnd: true // Custom flag to ensure RSS is always last
         }];
 
         // Platform specific clients
@@ -170,17 +170,17 @@ export default class ClientsPanel {
             ],
             windows: [
                 {
-                    title: 'gPodder',
-                    scheme: 'gpodder://',
-                    icon: 'windows/gpodder.png',
-                    install: 'http://gpodder.org/downloads'
-                },
-                {
                     title: 'iTunes',
                     scheme: 'itpc://',
                     icon: 'osx/itunes.png',
                     install: 'http://www.apple.com/itunes/',
                     customFeedType: 'itunes-url'
+                },
+                {
+                    title: 'gPodder',
+                    scheme: 'gpodder://',
+                    icon: 'windows/gpodder.png',
+                    install: 'http://gpodder.org/downloads'
                 },
                 {
                     title: 'Podscout',
@@ -229,10 +229,14 @@ export default class ClientsPanel {
         };
 
         // Get clients for detected platform, fallback to cloud if platform not found
-        const platformSpecificClients = platformClients[this.platform] || platformClients.cloud;
-        
-        // Always include cloud clients and base clients
-        return [...baseClients, ...platformSpecificClients, ...platformClients.cloud];
+        let platformSpecificClients = platformClients[this.platform] || platformClients.cloud;
+
+        // Ensure RSS is always last
+        const rssClient = baseClients.find(client => client.alwaysAtEnd);
+        const otherClients = baseClients.filter(client => !client.alwaysAtEnd);
+
+        // Return other clients + platform specific clients + RSS client
+        return [...otherClients, ...platformSpecificClients, rssClient];
     }
 
     render() {
@@ -244,20 +248,16 @@ export default class ClientsPanel {
         clientsContainer.appendChild(platformTitle);
 
         const list = document.createElement('ul');
-        list.classList.add('clients-list');
+        list.classList.add('clients-list', 'stacked-list'); // Add class for stacked layout
 
         this.clients.forEach(client => {
             const listItem = document.createElement('li');
             const link = document.createElement('a');
             
             // Use scheme or URL depending on what's available
-            // link.href = client.scheme || client.url;
-
-            // // Format URLs based on type
             if (client.scheme) {
-                let strippedProtocol = this.podcast.feeds[0].url;
-                if (strippedProtocol.includes('//')) strippedProtocol = strippedProtocol.split('//')[1];
-                link.href = `${client.scheme}${strippedProtocol}`;
+                const encodedUrl = encodeURIComponent(this.podcast.feeds[0].url);
+                link.href = `${client.scheme}${encodedUrl}`;
             } else {
                 link.href = client.url || '#';
             }
