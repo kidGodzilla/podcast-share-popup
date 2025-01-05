@@ -33,7 +33,7 @@ export default class PodcastPanel {
 
         const subscribeButton = document.createElement('button');
         subscribeButton.classList.add('subscribe-button');
-        subscribeButton.textContent = 'Choose Client'; // You can customize this text
+        subscribeButton.textContent = 'Continue';
         subscribeButton.addEventListener('click', () => this.parent.movePanels(1));
         podcastInfo.appendChild(subscribeButton);
 
