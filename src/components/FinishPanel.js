@@ -14,15 +14,20 @@ export default class FinishPanel {
         const finishInfo = document.createElement('div');
         finishInfo.classList.add('finish-info');
 
-        const message = document.createElement('p');
-        message.textContent = 'You have successfully subscribed!'; // Customize as needed
-        finishInfo.appendChild(message);
+        finishInfo.innerHTML = `
+            <p>Subscription Successful!</p>
+            <button class="close-button">Close</button>
+            <button class="back-button">Choose a Different App</button>
+        `;
 
-        const closeButton = document.createElement('button');
-        closeButton.classList.add('close-button');
-        closeButton.textContent = 'Close';
-        closeButton.addEventListener('click', () => this.parent.closePopup());
-        finishInfo.appendChild(closeButton);
+        // Add event listeners
+        finishInfo.querySelector('.close-button').addEventListener('click', () => {
+            this.parent.closePopup();
+        });
+
+        finishInfo.querySelector('.back-button').addEventListener('click', () => {
+            this.parent.movePanels(1); // Go back to Clients Panel
+        });
 
         this.container.appendChild(finishInfo);
     }
