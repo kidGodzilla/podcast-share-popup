@@ -16,11 +16,8 @@ export default class ClientsPanel {
         const ua = window.navigator?.userAgent || "";
         
         // Match original platform detection logic
-        if (/Windows NT 10.0/.test(ua)) return 'windows10';
-        if (/Windows NT 6.3/.test(ua)) return 'windows81';
-        if (/Windows NT 6.2/.test(ua)) return 'windows8';
-        if (/Windows NT 6.1/.test(ua)) return 'windows7';
-        if (/trident/i.test(ua)) return 'windowsphone';
+        if (/Windows/.test(ua)) return 'windows';
+        // if (/trident/i.test(ua)) return 'windowsphone';
         if (/android/i.test(ua)) return 'android';
         if (/(ipad|iphone|ipod)/i.test(ua)) return 'ios';
         if (/(linux|openbsd|freebsd|netbsd)/i.test(ua)) return 'unix';
@@ -34,7 +31,7 @@ export default class ClientsPanel {
         
         // Base RSS client that's always available
         const baseClients = [{
-            title: 'Other (Feed URL)',
+            title: 'Other (RSS Feed URL)',
             url: feedUrl,
             icon: 'generic/rss.png'
         }];
@@ -44,138 +41,192 @@ export default class ClientsPanel {
             android: [
                 {
                     title: 'AntennaPod',
-                    scheme: `antennapod-subscribe://${encodeURIComponent(feedUrl)}`,
+                    scheme: 'antennapod-subscribe://',
                     icon: 'android/antennapod.png',
                     store: 'https://play.google.com/store/apps/details?id=de.danoeh.antennapod'
                 },
                 {
                     title: 'BeyondPod',
-                    scheme: `beyondpod://${encodeURIComponent(feedUrl)}`,
+                    scheme: 'beyondpod://',
                     icon: 'android/beyondpod.png',
                     store: 'https://play.google.com/store/apps/details?id=mobi.beyondpod'
                 },
                 {
                     title: 'Player.fm',
-                    scheme: `https://player.fm/subscribe?id=${encodeURIComponent(feedUrl)}`,
+                    scheme: 'https://player.fm/subscribe?id=',
                     icon: 'android/playerfm.png',
                     store: 'https://play.google.com/store/apps/details?id=fm.player'
                 },
                 {
-                    title: 'Pocket Casts',
-                    scheme: `pktc://subscribe/${encodeURIComponent(feedUrl)}`,
+                    title: 'PocketCasts',
+                    scheme: 'pktc://subscribe/',
                     icon: 'android/pocketcasts.png',
-                    store: 'https://play.google.com/store/apps/details?id=au.com.shiftyjelly.pocketcasts'
+                    install: 'https://play.google.com/store/apps/details?id=au.com.shiftyjelly.pocketcasts',
+                    encodePath: true
                 },
                 {
                     title: 'Podcast Addict',
-                    scheme: `podcastaddict://${encodeURIComponent(feedUrl)}`,
+                    scheme: 'podcastaddict://',
                     icon: 'android/podcastaddict.png',
                     store: 'https://play.google.com/store/apps/details?id=com.bambuna.podcastaddict'
                 },
                 {
                     title: 'Podcast Republic',
-                    scheme: `podcastrepublic://subscribe/${encodeURIComponent(feedUrl)}`,
+                    scheme: 'podcastrepublic://subscribe/',
                     icon: 'android/podcastrepublic.png',
                     store: 'https://play.google.com/store/apps/details?id=com.itunestoppodcastplayer.app'
+                },
+                {
+                    title: 'Podcatcher Deluxe',
+                    scheme: 'pcd://',
+                    icon: 'android/podcatcher-deluxe.png',
+                    store: 'https://play.google.com/store/search?q=pub:Kevin%20Hausmann'
+                },
+                {
+                    title: 'Podkicker',
+                    scheme: 'podkicker://subscribe/',
+                    icon: 'android/podkicker.png',
+                    store: 'https://play.google.com/store/apps/details?id=ait.podka'
+                },
+                {
+                    title: 'uPod',
+                    scheme: 'upod://',
+                    icon: 'android/upod.png'
                 }
             ],
             ios: [
                 {
-                    title: 'Apple Podcasts',
-                    scheme: `podcast://${encodeURIComponent(feedUrl)}`,
-                    icon: 'ios/podcasts.png',
-                    store: 'https://apps.apple.com/app/podcasts/id525463029'
-                },
-                {
                     title: 'Castro',
-                    scheme: `castro://subscribe/${encodeURIComponent(feedUrl)}`,
+                    scheme: 'castro://subscribe/',
                     icon: 'ios/castro.png',
                     store: 'https://apps.apple.com/app/castro-2/id1080840241'
                 },
                 {
-                    title: 'Overcast',
-                    scheme: `overcast://x-callback-url/add?url=${encodeURIComponent(feedUrl)}`,
-                    icon: 'ios/overcast.png',
-                    store: 'https://apps.apple.com/app/overcast-podcast-player/id888422857'
+                    title: 'Downcast',
+                    scheme: 'downcast://',
+                    icon: 'ios/downcast.png',
+                    store: 'https://apps.apple.com/app/downcast/id393858566'
                 },
                 {
-                    title: 'Pocket Casts',
-                    scheme: `pktc://subscribe/${encodeURIComponent(feedUrl)}`,
+                    title: 'iCatcher',
+                    scheme: 'icatcher://',
+                    icon: 'ios/icatcher.png',
+                    store: 'https://apps.apple.com/app/icatcher!-podcast-app/id414419105'
+                },
+                {
+                    title: 'Instacast',
+                    scheme: 'instacast://',
+                    icon: 'ios/instacast.png'
+                },
+                {
+                    title: 'Overcast',
+                    scheme: 'overcast://x-callback-url/add?url=',
+                    icon: 'ios/overcast.png',
+                    store: 'https://apps.apple.com/app/overcast-podcast-player/id888422857',
+                    http: true
+                },
+                {
+                    title: 'PocketCasts',
+                    scheme: 'pktc://subscribe/',
                     icon: 'ios/pocketcasts.png',
                     store: 'https://apps.apple.com/app/pocket-casts/id414834813'
                 },
                 {
-                    title: 'Downcast',
-                    scheme: `downcast://${encodeURIComponent(feedUrl)}`,
-                    icon: 'ios/downcast.png',
-                    store: 'https://apps.apple.com/app/downcast/id393858566'
+                    title: 'Podcasts',
+                    scheme: 'podcast://',
+                    icon: 'ios/podcasts.png',
+                    store: 'https://apps.apple.com/app/podcasts/id525463029'
+                },
+                {
+                    title: 'Podcat',
+                    scheme: 'podcat://',
+                    icon: 'ios/podcat.png',
+                    store: 'https://apps.apple.com/app/podcat/id845960230'
+                },
+                {
+                    title: 'RSSRadio',
+                    scheme: 'rssradio://',
+                    icon: 'ios/rssradio.png',
+                    store: 'https://apps.apple.com/app/rssradio-premium-podcast-downloader/id679025359'
                 }
             ],
             osx: [
                 {
                     title: 'Podcasts',
-                    scheme: `podcast://${encodeURIComponent(feedUrl)}`,
+                    scheme: 'podcast://',
                     icon: 'osx/podcasts_big_sur.png'
                 },
                 {
-                    title: 'iTunes',
-                    scheme: `itpc://${encodeURIComponent(feedUrl)}`,
-                    icon: 'osx/itunes.png',
-                    install: 'http://www.apple.com/itunes/'
-                },
-                {
                     title: 'Downcast',
-                    scheme: `downcast://${encodeURIComponent(feedUrl)}`,
+                    scheme: 'downcast://',
                     icon: 'osx/downcast.png',
                     store: 'https://apps.apple.com/app/downcast/id668429425'
                 },
                 {
                     title: 'Instacast',
-                    scheme: `instacast://${encodeURIComponent(feedUrl)}`,
+                    scheme: 'instacast://',
                     icon: 'osx/instacast.png'
                 }
             ],
-            windows10: [
-                {
-                    title: 'iTunes',
-                    scheme: `itpc://${encodeURIComponent(feedUrl)}`,
-                    icon: 'osx/itunes.png',
-                    install: 'http://www.apple.com/itunes/'
-                },
+            windows: [
                 {
                     title: 'gPodder',
-                    scheme: `gpodder://${encodeURIComponent(feedUrl)}`,
+                    scheme: 'gpodder://',
                     icon: 'windows/gpodder.png',
                     install: 'http://gpodder.org/downloads'
+                },
+                {
+                    title: 'iTunes',
+                    scheme: 'itpc://',
+                    icon: 'osx/itunes.png',
+                    install: 'http://www.apple.com/itunes/',
+                    customFeedType: 'itunes-url'
+                },
+                {
+                    title: 'Podscout',
+                    scheme: 'podscout://',
+                    icon: 'windows/podscout.png',
+                    store: 'http://apps.microsoft.com/windows/de-de/app/podscout/f4316b46-7682-4cea-948b-53d135b2df17'
                 }
             ],
             cloud: [
                 {
                     title: 'gpodder.net',
-                    url: `http://gpodder.net/subscribe?url=${encodeURIComponent(feedUrl)}`,
+                    scheme: 'http://gpodder.net/subscribe?url=',
                     icon: 'cloud/gpoddernet.png',
-                    register: 'https://gpodder.net/'
+                    register: 'https://gpodder.net/',
+                    http: true
                 },
                 {
                     title: 'Player.fm',
-                    url: `https://player.fm/subscribe?id=${encodeURIComponent(feedUrl)}`,
+                    scheme: 'https://player.fm/subscribe?id=',
                     icon: 'cloud/playerfm.png',
-                    register: 'https://player.fm/'
+                    register: 'https://player.fm/',
+                    http: true
                 },
                 {
                     title: 'Pocket Casts',
-                    url: `http://pcasts.in/feed/${encodeURIComponent(feedUrl)}`,
+                    scheme: 'http://pcasts.in/feed/',
                     icon: 'cloud/pocketcasts.png',
-                    register: 'https://play.pocketcasts.com/'
+                    register: 'https://play.pocketcasts.com/',
+                    encodePath: false
+                }
+            ],
+            unix: [
+                {
+                    title: 'Clementine',
+                    scheme: 'itpc://',
+                    icon: 'unix/clementine.png',
+                    install: 'https://www.clementine-player.org/downloads'
+                },
+                {
+                    title: 'gPodder',
+                    scheme: 'gpodder://',
+                    icon: 'unix/gpodder.png',
+                    install: 'http://gpodder.org/downloads'
                 }
             ]
         };
-
-        // Use windows10 clients for other Windows versions
-        platformClients.windows81 = platformClients.windows10;
-        platformClients.windows8 = platformClients.windows10;
-        platformClients.windows7 = platformClients.windows10;
-        platformClients.unix = platformClients.cloud;
 
         // Get clients for detected platform, fallback to cloud if platform not found
         const platformSpecificClients = platformClients[this.platform] || platformClients.cloud;
@@ -200,7 +251,16 @@ export default class ClientsPanel {
             const link = document.createElement('a');
             
             // Use scheme or URL depending on what's available
-            link.href = client.scheme || client.url;
+            // link.href = client.scheme || client.url;
+
+            // // Format URLs based on type
+            if (client.scheme) {
+                let strippedProtocol = this.podcast.feeds[0].url;
+                if (strippedProtocol.includes('//')) strippedProtocol = strippedProtocol.split('//')[1];
+                link.href = `${client.scheme}${strippedProtocol}`;
+            } else {
+                link.href = client.url || '#';
+            }
             
             // If there's a store/install/register link and we're on mobile web, use that instead
             if ((this.platform === 'android' || this.platform === 'ios') && !link.href.startsWith('http')) {
