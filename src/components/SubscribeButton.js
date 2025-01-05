@@ -109,12 +109,12 @@ export default class SubscribeButton {
             const title = xmlDoc.querySelector('channel > title')?.textContent || 'Podcast Title';
             const subtitle = xmlDoc.querySelector('channel > description')?.textContent || '';
             const cover = xmlDoc.querySelector('channel > image > url')?.textContent || '';
-            // Extracting all enclosure URLs as feeds
-            const feedElements = Array.from(xmlDoc.querySelectorAll('channel > item > enclosure'));
-            const feeds = feedElements.map(enclosure => ({
-                url: enclosure.getAttribute('url'),
-                format: enclosure.getAttribute('type')?.split('/')?.[1] || 'mp3', // Extract format from MIME type
-            }));
+            
+            // Instead of using enclosure URLs, we'll use the feed URL itself
+            const feeds = [{
+                url: this.element.dataset.feedUrl, // Use the original feed URL
+                format: 'rss'  // Mark it as an RSS feed
+            }];
 
             return { title, subtitle, cover, feeds };
         } catch (error) {
