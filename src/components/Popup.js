@@ -34,7 +34,7 @@ export default class Popup {
             <h2>Subscribe</h2>
           </div>
           <div id="podlove-subscribe-panel-podcast"></div>
-          <div id="podlove-subscribe-panel-clients"></div>
+          <div id="podlove-subscribe-panel-clients" style="display: none;"></div>
           <div id="podlove-subscribe-panel-finish" style="display: none;"></div>
         </div>
       </div>
@@ -71,12 +71,18 @@ export default class Popup {
         if (step === 1) {
             podcastPanel.style.display = 'none';
             clientsPanel.style.display = 'block';
+            // Update header text when showing clients
+            document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Choose App';
         } else if (step === 2) {
             clientsPanel.style.display = 'none';
             finishPanel.style.display = 'block';
+            // Update header text when showing finish panel
+            document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Subscribed!';
         } else if (step === 0) {
             clientsPanel.style.display = 'none';
             podcastPanel.style.display = 'block';
+            // Reset header text when going back to podcast panel
+            document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Subscribe';
         }
     }
 
