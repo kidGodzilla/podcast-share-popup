@@ -267,6 +267,22 @@ export default class ClientsPanel {
                 link.href = client.store || client.install || client.register || link.href;
             }
 
+            // Instead of directly navigating, handle the click to manage panel transitions
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default navigation
+
+                // Move to Handling Panel
+                this.parent.movePanels(2);
+
+                // Attempt to open the client URL
+                window.location.href = link.href;
+
+                // Optionally, you can set a timeout to show "Did something go wrong?" if the app doesn't open
+                // setTimeout(() => {
+                //     this.parent.movePanels(3);
+                // }, 2000); // Adjust the timeout as needed
+            });
+
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
             link.innerHTML = `

@@ -76,18 +76,19 @@ export default class Popup {
         if (step === 1) {
             podcastPanel.style.display = 'none';
             clientsPanel.style.display = 'block';
+            handlingPanel.style.display = 'none';
             // Update header text when showing clients
             document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Choose App';
         } else if (step === 2) {
             clientsPanel.style.display = 'none';
             handlingPanel.style.display = 'block';
             // Update header text when handling selection
-            document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Handing over to Podcasts...';
+            document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Processing...';
         } else if (step === 3) {
             handlingPanel.style.display = 'none';
             finishPanel.style.display = 'block';
             // Update header text when showing finish panel
-            document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Did something go wrong?';
+            document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Handing over to your selected app...';
         } else if (step === 0) {
             clientsPanel.style.display = 'none';
             podcastPanel.style.display = 'block';

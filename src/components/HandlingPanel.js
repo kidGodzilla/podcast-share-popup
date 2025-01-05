@@ -12,25 +12,21 @@ export default class HandlingPanel {
         handlingInfo.classList.add('handling-info');
 
         handlingInfo.innerHTML = `
-            <p>Handing over to Podcasts...</p>
+            <p>Handing over to your selected app...</p>
             <p>Did something go wrong?</p>
             <button class="try-again-button">Try Again</button>
             <button class="back-button">Back</button>
-            <button class="close-button">Close</button>
         `;
 
         // Add event listeners
         handlingInfo.querySelector('.try-again-button').addEventListener('click', () => {
             // Implement retry logic here
             alert('Retrying...');
+            this.parent.movePanels(2); // Optionally, retry opening the client
         });
 
         handlingInfo.querySelector('.back-button').addEventListener('click', () => {
             this.parent.movePanels(1); // Go back to Clients Panel
-        });
-
-        handlingInfo.querySelector('.close-button').addEventListener('click', () => {
-            this.parent.closePopup();
         });
 
         this.container.appendChild(handlingInfo);

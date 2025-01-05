@@ -15,8 +15,8 @@ export default class FinishPanel {
         finishInfo.classList.add('finish-info');
 
         finishInfo.innerHTML = `
-            <p>Subscription Successful!</p>
-            <button class="close-button">Close</button>
+            <p>Did something go wrong?</p>
+            <button class="close-button">&times;</button>
             <button class="back-button">Choose a Different App</button>
         `;
 
