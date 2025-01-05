@@ -153,7 +153,7 @@ export default class ClientsPanel {
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
             link.innerHTML = `
-                <img src="${client.icon}" alt="${client.title} icon">
+                <img src="/src/images/${client.icon}" alt="${client.title} icon">
                 <span>${client.title}</span>
             `;
             
