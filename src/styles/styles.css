@@ -1,37 +1,18 @@
 /* src/styles/styles.css */
 
-/* Subscribe Button Styles */
-.podlove-subscribe-button {
-    padding: 12px 24px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    overflow: hidden;
 }
 
-.podlove-subscribe-button:hover {
-    background-color: #0056b3;
-}
-
-/* Popup Overlay */
 .podlove-subscribe-popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.6);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
-    animation: fadeIn 0.3s ease-out;
 }
 
-/* Popup Modal */
 .podlove-subscribe-popup-modal {
     background-color: #fff;
     border-radius: 8px;
@@ -40,25 +21,20 @@
     position: relative;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     animation: slideDown 0.3s ease-out;
-}
-
-/* Popup Inner Content */
-.podlove-subscribe-popup-inner {
     padding: 20px;
 }
 
 /* Popup Header */
 .podlove-subscribe-popup-header {
-    /*display: flex;*/
-    /*justify-content: space-between;*/
-    /*align-items: center;*/
-    margin-bottom: 20px;
+    position: relative;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .podlove-subscribe-popup-header h2 {
     margin: 0;
     font-size: 24px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .close-button {
@@ -66,10 +42,9 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
-    line-height: 1;
     position: absolute;
-    right: 12px;
-    top: 22px;
+    right: 10px;
+    top: 0;
 }
 
 /* Podcast Info */
@@ -95,7 +70,7 @@
     color: #555;
 }
 
-/* Choose Client Button */
+/* Continue Button */
 .subscribe-button {
     padding: 10px 20px;
     background-color: #28a745;
@@ -116,33 +91,80 @@
     list-style: none;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column; /* Stack vertically */
     gap: 15px;
     justify-content: center;
 }
 
-.clients-list li {
-    flex: 1 1 100px;
+.clients-list.stacked-list li {
+    flex: none;
     text-align: center;
 }
 
-.clients-list a {
-    text-decoration: none;
-    color: #007bff;
+.clients-list.stacked-list a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.clients-list.stacked-list a:hover {
+    background-color: #e2e6ea;
+}
+
+.clients-list.stacked-list a img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.clients-list.stacked-list a span {
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Handling Panel */
+.handling-info {
+    text-align: center;
+}
+
+.handling-info p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.handling-info button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+}
+
+.handling-info button:hover {
+    background-color: #0056b3;
+}
+
+/* Clients Panel */
+.clients-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.clients-list a img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    margin-bottom: 8px;
-}
-
-.clients-list a:hover {
-    color: #0056b3;
+.clients-container h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Finish Panel */
@@ -153,6 +175,7 @@
 .finish-info p {
     font-size: 18px;
     color: #333;
+    margin-bottom: 20px;
 }
 
 .finish-info button {
@@ -164,6 +187,7 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
+    margin: 5px;
 }
 
 .finish-info button:hover {
