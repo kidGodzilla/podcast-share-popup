@@ -122,6 +122,17 @@ export default class ClientsPanel {
                     scheme: `itpc://${encodeURIComponent(feedUrl)}`,
                     icon: 'osx/itunes.png',
                     install: 'http://www.apple.com/itunes/'
+                },
+                {
+                    title: 'Downcast',
+                    scheme: `downcast://${encodeURIComponent(feedUrl)}`,
+                    icon: 'osx/downcast.png',
+                    store: 'https://apps.apple.com/app/downcast/id668429425'
+                },
+                {
+                    title: 'Instacast',
+                    scheme: `instacast://${encodeURIComponent(feedUrl)}`,
+                    icon: 'osx/instacast.png'
                 }
             ],
             windows10: [
@@ -169,7 +180,8 @@ export default class ClientsPanel {
         // Get clients for detected platform, fallback to cloud if platform not found
         const platformSpecificClients = platformClients[this.platform] || platformClients.cloud;
         
-        return [...baseClients, ...platformSpecificClients];
+        // Always include cloud clients and base clients
+        return [...baseClients, ...platformSpecificClients, ...platformClients.cloud];
     }
 
     render() {
