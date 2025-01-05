@@ -7,23 +7,37 @@ export default class ClientsPanel {
         this.parent = parent;
         this.podcast = this.parent.podcast;
         this.options = this.parent.options;
-        this.platform = this.parent.platform;
+        this.platform = this.detectPlatform();
         this.clients = this.getClients();
         this.render();
     }
 
+    detectPlatform() {
+        const ua = window.navigator?.userAgent || "";
+        
+        // Match original platform detection logic
+        if (/Windows NT 10.0/.test(ua)) return 'windows10';
+        if (/Windows NT 6.3/.test(ua)) return 'windows81';
+        if (/Windows NT 6.2/.test(ua)) return 'windows8';
+        if (/Windows NT 6.1/.test(ua)) return 'windows7';
+        if (/trident/i.test(ua)) return 'windowsphone';
+        if (/android/i.test(ua)) return 'android';
+        if (/(ipad|iphone|ipod)/i.test(ua)) return 'ios';
+        if (/(linux|openbsd|freebsd|netbsd)/i.test(ua)) return 'unix';
+        if (/macintosh/i.test(ua)) return 'osx';
+        
+        return 'cloud';
+    }
+
     getClients() {
         const feedUrl = this.podcast.feeds[0]?.url || '';
-        const platform = this.detectPlatform();
         
-        // Base clients that work everywhere
-        const baseClients = [
-            {
-                title: 'RSS Feed',
-                url: feedUrl,
-                icon: 'generic/rss.png'
-            }
-        ];
+        // Base RSS client that's always available
+        const baseClients = [{
+            title: 'Other (Feed URL)',
+            url: feedUrl,
+            icon: 'generic/rss.png'
+        }];
 
         // Platform specific clients
         const platformClients = {
@@ -41,6 +55,12 @@ export default class ClientsPanel {
                     store: 'https://play.google.com/store/apps/details?id=mobi.beyondpod'
                 },
                 {
+                    title: 'Player.fm',
+                    scheme: `https://player.fm/subscribe?id=${encodeURIComponent(feedUrl)}`,
+                    icon: 'android/playerfm.png',
+                    store: 'https://play.google.com/store/apps/details?id=fm.player'
+                },
+                {
                     title: 'Pocket Casts',
                     scheme: `pktc://subscribe/${encodeURIComponent(feedUrl)}`,
                     icon: 'android/pocketcasts.png',
@@ -51,6 +71,12 @@ export default class ClientsPanel {
                     scheme: `podcastaddict://${encodeURIComponent(feedUrl)}`,
                     icon: 'android/podcastaddict.png',
                     store: 'https://play.google.com/store/apps/details?id=com.bambuna.podcastaddict'
+                },
+                {
+                    title: 'Podcast Republic',
+                    scheme: `podcastrepublic://subscribe/${encodeURIComponent(feedUrl)}`,
+                    icon: 'android/podcastrepublic.png',
+                    store: 'https://play.google.com/store/apps/details?id=com.itunestoppodcastplayer.app'
                 }
             ],
             ios: [
@@ -77,6 +103,39 @@ export default class ClientsPanel {
                     scheme: `pktc://subscribe/${encodeURIComponent(feedUrl)}`,
                     icon: 'ios/pocketcasts.png',
                     store: 'https://apps.apple.com/app/pocket-casts/id414834813'
+                },
+                {
+                    title: 'Downcast',
+                    scheme: `downcast://${encodeURIComponent(feedUrl)}`,
+                    icon: 'ios/downcast.png',
+                    store: 'https://apps.apple.com/app/downcast/id393858566'
+                }
+            ],
+            osx: [
+                {
+                    title: 'Podcasts',
+                    scheme: `podcast://${encodeURIComponent(feedUrl)}`,
+                    icon: 'osx/podcasts_big_sur.png'
+                },
+                {
+                    title: 'iTunes',
+                    scheme: `itpc://${encodeURIComponent(feedUrl)}`,
+                    icon: 'osx/itunes.png',
+                    install: 'http://www.apple.com/itunes/'
+                }
+            ],
+            windows10: [
+                {
+                    title: 'iTunes',
+                    scheme: `itpc://${encodeURIComponent(feedUrl)}`,
+                    icon: 'osx/itunes.png',
+                    install: 'http://www.apple.com/itunes/'
+                },
+                {
+                    title: 'gPodder',
+                    scheme: `gpodder://${encodeURIComponent(feedUrl)}`,
+                    icon: 'windows/gpodder.png',
+                    install: 'http://gpodder.org/downloads'
                 }
             ],
             cloud: [
@@ -91,50 +150,36 @@ export default class ClientsPanel {
                     url: `https://player.fm/subscribe?id=${encodeURIComponent(feedUrl)}`,
                     icon: 'cloud/playerfm.png',
                     register: 'https://player.fm/'
-                }
-            ],
-            desktop: [
-                {
-                    title: 'iTunes',
-                    scheme: `itpc://${encodeURIComponent(feedUrl)}`,
-                    icon: 'osx/itunes.png',
-                    install: 'http://www.apple.com/itunes/'
                 },
                 {
-                    title: 'gPodder',
-                    scheme: `gpodder://${encodeURIComponent(feedUrl)}`,
-                    icon: 'windows/gpodder.png',
-                    install: 'http://gpodder.org/downloads'
+                    title: 'Pocket Casts',
+                    url: `http://pcasts.in/feed/${encodeURIComponent(feedUrl)}`,
+                    icon: 'cloud/pocketcasts.png',
+                    register: 'https://play.pocketcasts.com/'
                 }
             ]
         };
 
-        // Combine base clients with platform-specific clients
-        return [...baseClients, ...(platformClients[platform] || platformClients.cloud)];
-    }
+        // Use windows10 clients for other Windows versions
+        platformClients.windows81 = platformClients.windows10;
+        platformClients.windows8 = platformClients.windows10;
+        platformClients.windows7 = platformClients.windows10;
+        platformClients.unix = platformClients.cloud;
 
-    detectPlatform() {
-        const ua = navigator.userAgent || navigator.vendor || window.opera;
+        // Get clients for detected platform, fallback to cloud if platform not found
+        const platformSpecificClients = platformClients[this.platform] || platformClients.cloud;
         
-        if (/android/i.test(ua)) return 'android';
-        if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) return 'ios';
-        if (/Windows/.test(ua)) return 'desktop';
-        if (/Macintosh/.test(ua)) return 'desktop';
-        if (/Linux/.test(ua)) return 'desktop';
-        
-        return 'cloud';
+        return [...baseClients, ...platformSpecificClients];
     }
 
     render() {
         const clientsContainer = document.createElement('div');
         clientsContainer.classList.add('clients-container');
 
-        // Add platform section title
         const platformTitle = document.createElement('h3');
         platformTitle.textContent = `Available on ${this.platform.charAt(0).toUpperCase() + this.platform.slice(1)}`;
         clientsContainer.appendChild(platformTitle);
 
-        // Create clients list
         const list = document.createElement('ul');
         list.classList.add('clients-list');
 
@@ -145,9 +190,9 @@ export default class ClientsPanel {
             // Use scheme or URL depending on what's available
             link.href = client.scheme || client.url;
             
-            // If there's a store/install link and we're on mobile web, use that instead
-            if (this.platform === 'android' || this.platform === 'ios') {
-                link.href = client.store || client.install || link.href;
+            // If there's a store/install/register link and we're on mobile web, use that instead
+            if ((this.platform === 'android' || this.platform === 'ios') && !link.href.startsWith('http')) {
+                link.href = client.store || client.install || client.register || link.href;
             }
 
             link.target = '_blank';
