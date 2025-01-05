@@ -2,6 +2,7 @@
 import ClientsPanel from './ClientsPanel.js';
 import PodcastPanel from './PodcastPanel.js';
 import FinishPanel from './FinishPanel.js';
+import HandlingPanel from './HandlingPanel.js';
 import '../styles/styles.css'; // Import your styles
 
 export default class Popup {
@@ -35,6 +36,7 @@ export default class Popup {
           </div>
           <div id="podlove-subscribe-panel-podcast"></div>
           <div id="podlove-subscribe-panel-clients" style="display: none;"></div>
+          <div id="podlove-subscribe-panel-handling" style="display: none;"></div>
           <div id="podlove-subscribe-panel-finish" style="display: none;"></div>
         </div>
       </div>
@@ -55,16 +57,19 @@ export default class Popup {
     initPanels() {
         const podcastContainer = document.querySelector('#podlove-subscribe-panel-podcast');
         const clientsContainer = document.querySelector('#podlove-subscribe-panel-clients');
+        const handlingContainer = document.querySelector('#podlove-subscribe-panel-handling');
         const finishContainer = document.querySelector('#podlove-subscribe-panel-finish');
 
         this.podcastPanel = new PodcastPanel(podcastContainer, this);
         this.clientsPanel = new ClientsPanel(clientsContainer, this);
+        this.handlingPanel = new HandlingPanel(handlingContainer, this);
         this.finishPanel = new FinishPanel(finishContainer, this);
     }
 
     movePanels(step) {
         const podcastPanel = document.querySelector('#podlove-subscribe-panel-podcast');
         const clientsPanel = document.querySelector('#podlove-subscribe-panel-clients');
+        const handlingPanel = document.querySelector('#podlove-subscribe-panel-handling');
         const finishPanel = document.querySelector('#podlove-subscribe-panel-finish');
 
         // Simple panel navigation logic
@@ -75,9 +80,14 @@ export default class Popup {
             document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Choose App';
         } else if (step === 2) {
             clientsPanel.style.display = 'none';
+            handlingPanel.style.display = 'block';
+            // Update header text when handling selection
+            document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Handing over to Podcasts...';
+        } else if (step === 3) {
+            handlingPanel.style.display = 'none';
             finishPanel.style.display = 'block';
             // Update header text when showing finish panel
-            document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Subscribed!';
+            document.querySelector('.podlove-subscribe-popup-header h2').textContent = 'Did something go wrong?';
         } else if (step === 0) {
             clientsPanel.style.display = 'none';
             podcastPanel.style.display = 'block';
