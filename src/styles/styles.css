@@ -1,0 +1,178 @@
+/* src/styles/styles.css */
+
+/* Subscribe Button Styles */
+.podlove-subscribe-button {
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.podlove-subscribe-button:hover {
+    background-color: #0056b3;
+}
+
+/* Popup Overlay */
+.podlove-subscribe-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Popup Modal */
+.podlove-subscribe-popup-modal {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Popup Inner Content */
+.podlove-subscribe-popup-inner {
+    padding: 20px;
+}
+
+/* Popup Header */
+.podlove-subscribe-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.podlove-subscribe-popup-header h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* Podcast Info */
+.podcast-info {
+    text-align: center;
+}
+
+.podcast-info img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.podcast-info h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.podcast-info p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+/* Choose Client Button */
+.subscribe-button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.subscribe-button:hover {
+    background-color: #218838;
+}
+
+/* Clients List */
+.clients-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.clients-list li {
+    flex: 1 1 100px;
+    text-align: center;
+}
+
+.clients-list a {
+    text-decoration: none;
+    color: #007bff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.clients-list a img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+.clients-list a:hover {
+    color: #0056b3;
+}
+
+/* Finish Panel */
+.finish-info {
+    text-align: center;
+}
+
+.finish-info p {
+    font-size: 18px;
+    color: #333;
+}
+
+.finish-info button {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.finish-info button:hover {
+    background-color: #c82333;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

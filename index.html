@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: blob: filesystem: about: ws: wss: 'unsafe-inline' 'unsafe-eval'; script-src * data: blob: 'unsafe-inline' 'unsafe-eval'; connect-src * data: blob: 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * data: blob: 'unsafe-inline'; font-src * data: blob: 'unsafe-inline'">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+
+    <meta name="theme-color" content="#fff">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>Demo</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-top: 30px;
+            min-height: 90vh;
+        }
+    </style>
+
+    <link rel="stylesheet" href="src/styles/styles.css">
+</head>
+<body>
+
+<h1>Podcast Popup Demo</h1>
+
+<!--<script src="dist/podlove-popup.bundle.js"></script>-->
+<!--<script>-->
+<!--    // Initialize the Subscribe Buttons-->
+<!--    // The component auto-initializes on DOMContentLoaded-->
+<!--</script>-->
+
+<!-- Example Embed -->
+<script
+        src="dist/podlove-popup.bundle.js"
+        class="podlove-subscribe-button"
+        data-feed-url="https://api.indie.am/james/rss"
+        data-language="en"
+        data-size="medium"
+        data-style="filled"
+        data-format="rectangle">
+</script>
+
+<script>
+    // PodlovePopup.open();
+</script>
+</body>
+</html>
